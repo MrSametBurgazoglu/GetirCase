@@ -15,11 +15,8 @@ type MongoDatabase struct {
 
 func SetupMongoDatabase() *MongoDatabase {
 	database := new(MongoDatabase)
-	client, err := mongo.NewClient(options.Client().ApplyURI(config.MongoConnectionString))
-	if err != nil {
-		log.Fatal(err)
-	}
-	err = client.Connect(context.TODO())
+	ctx := context.TODO()
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(config.MongoConnectionString))
 	if err != nil {
 		log.Fatal(err)
 	}
