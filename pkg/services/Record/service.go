@@ -17,19 +17,22 @@ type Service struct {
 
 func (s *Service) FilterRecords(startDate, endDate string, minCount, maxCount int) ([]*models.RecordFilterModel, error) {
 	var err error
-	var startDateISO time.Time
-	var endDateISO time.Time
+	var startDateISO string
+	var endDateISO string
 
 	ctx := context.TODO()
 
-	layout := "2006-01-02T15:04:05Z"
+	sourceLayout := "2006-01-02"
+	destlayout := "2006-01-02T15:04:05Z"
 
-	startDateISO, err = time.Parse(layout, startDate)
+	startDateTime, err := time.Parse(sourceLayout, startDate)
+	startDateISO = startDateTime.Format(destlayout)
 	if err != nil {
 		return nil, err
 	}
 
-	endDateISO, err = time.Parse(layout, endDate)
+	endDateTime, err := time.Parse(sourceLayout, startDate)
+	endDateISO = endDateTime.Format(destlayout)
 	if err != nil {
 		return nil, err
 	}

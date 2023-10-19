@@ -1,0 +1,69 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Getir Case Api",
+        "title": "GETIR CASE API",
+        "contact": {},
+        "version": "0.0.1"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/api/filter_records": {
+            "post": {
+                "description": "filter records by date and total count range",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "filters"
+                ],
+                "summary": "Filter Records",
+                "parameters": [
+                    {
+                        "description": "Date and Total Count Range",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/RecordRequests.FilterInput"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "RecordRequests.FilterInput": {
+            "type": "object",
+            "required": [
+                "endDate",
+                "maxCount",
+                "minCount",
+                "startDate"
+            ],
+            "properties": {
+                "endDate": {
+                    "type": "string",
+                    "example": "2018-02-02"
+                },
+                "maxCount": {
+                    "type": "integer",
+                    "example": 3000
+                },
+                "minCount": {
+                    "type": "integer",
+                    "example": 2700
+                },
+                "startDate": {
+                    "type": "string",
+                    "example": "2016-01-26"
+                }
+            }
+        }
+    }
+}

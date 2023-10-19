@@ -1,6 +1,7 @@
 package database
 
 import (
+	"getir_case/config"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -11,9 +12,10 @@ type RedisDatabase struct {
 func SetupRedisDatabase() *RedisDatabase {
 	database := new(RedisDatabase)
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
-		Password: "", // no password set
-		DB:       0,  // use default DB
+		Username: config.MongoUserName,
+		Addr:     config.RedisConnectionAddr,
+		Password: config.RedisPassword,
+		DB:       config.RedisDatabaseNumber,
 	})
 	database.Client = rdb
 	return database
