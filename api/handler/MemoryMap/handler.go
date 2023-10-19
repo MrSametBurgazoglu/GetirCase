@@ -24,9 +24,9 @@ func NewMemoryMapHandler(memoryMapService *MemoryMap.Service) *Handler {
 //	@Accept			json
 //	@Produce		json
 //	@Param key query string true "key"
-//	@Router			/api/get_in_memory [post]
+//	@Router			/api/get_in_memory [get]
 func (h *Handler) GetValueByKey(w http.ResponseWriter, r *http.Request) error {
-	allowedMethods := []string{"POST"}
+	allowedMethods := []string{"GET"}
 
 	utils.SetJsonHeader(w)
 

@@ -37,7 +37,7 @@
             }
         },
         "/api/get_in_memory": {
-            "post": {
+            "get": {
                 "description": "get value by key",
                 "consumes": [
                     "application/json"
