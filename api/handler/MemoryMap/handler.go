@@ -16,6 +16,15 @@ func NewMemoryMapHandler(memoryMapService *MemoryMap.Service) *Handler {
 	return &Handler{Service: memoryMapService}
 }
 
+// GetValueByKey godoc
+//
+//	@Summary		Get Value
+//	@Description	get value by key
+//	@Tags			in_memory
+//	@Accept			json
+//	@Produce		json
+//	@Param key query string true "key"
+//	@Router			/api/get_in_memory [post]
 func (h *Handler) GetValueByKey(w http.ResponseWriter, r *http.Request) error {
 	allowedMethods := []string{"POST"}
 
@@ -39,6 +48,16 @@ func (h *Handler) GetValueByKey(w http.ResponseWriter, r *http.Request) error {
 	}
 }
 
+// SetValueByKey godoc
+//
+//	@Summary		Set Value
+//	@Description	set value by key
+//	@Tags			in_memory
+//	@Accept			json
+//	@Produce		json
+//	@Param key query string true "key"
+//	@Param value query string true "key"
+//	@Router			/api/set_in_memory [post]
 func (h *Handler) SetValueByKey(w http.ResponseWriter, r *http.Request) error {
 	utils.SetJsonHeader(w)
 
