@@ -8,13 +8,13 @@ import (
 	"log"
 )
 
-type Database struct {
+type MongoDatabase struct {
 	Client           *mongo.Client
 	RecordCollection *mongo.Collection
 }
 
-func SetupDatabase() *Database {
-	database := new(Database)
+func SetupMongoDatabase() *MongoDatabase {
+	database := new(MongoDatabase)
 	client, err := mongo.NewClient(options.Client().ApplyURI(config.MongoConnectionString))
 	if err != nil {
 		log.Fatal(err)

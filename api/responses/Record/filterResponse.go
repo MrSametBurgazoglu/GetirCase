@@ -12,12 +12,8 @@ type FilterResponse struct {
 	Records []*models.RecordFilterModel
 }
 
-func CreateFilterResponse(code responses.ResponseTypes, message string, records []*models.RecordFilterModel) *FilterResponse {
-	filterResponse := new(FilterResponse)
-	filterResponse.Code = code
-	filterResponse.Msg = message
-	filterResponse.Records = records
-	return filterResponse
+func CreateFilterResponse(code responses.ResponseTypes, message string, records []*models.RecordFilterModel) FilterResponse {
+	return FilterResponse{Code: code, Msg: message, Records: records}
 }
 
 func (receiver *FilterResponse) WriteResponse(writer io.Writer) {

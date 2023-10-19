@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"getir_case/api/handler/MemoryMap"
 	"getir_case/api/handler/Record"
 	"getir_case/pkg/services"
 	"log"
@@ -18,6 +19,9 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func SetupHandlers(apiServices *services.Services) {
 
 	recordHandler := Record.NewRecordHandler(apiServices.RecordService)
-	http.Handle("/", Handler(recordHandler.Filter))
+	http.Handle("api/filter_records", Handler(recordHandler.Filter))
 
+	memoryMapHandler := MemoryMap.NewMemoryMapHandler(apiServices.MemoryMapService)
+	http.Handle("api/get_in_memory", Handler(memoryMapHandler.GetValueByKey))
+	http.Handle("api/set_in_memory", Handler(memoryMapHandler.SetValueByKey))
 }

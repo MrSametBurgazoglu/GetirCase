@@ -20,9 +20,17 @@ func NewRecordHandler(recordService *Record.Service) *Handler {
 
 func (h *Handler) Filter(w http.ResponseWriter, r *http.Request) error {
 	var input recordRequests.FilterInput
+	allowedMethods := []string{"POST"}
+
+	utils.SetJsonHeader(w)
+
+	if !utils.CheckMethod(allowedMethods, r) {
+		return utils.WriteErrorResponse(w, "404 NOT FOUND")
+	}
+
 	if err := utils.ParseJsonBody(r.Body, &input); err != nil {
 		errResponse := recordResponses.CreateFilterResponse(err.Code, err.Message, nil)
-		return utils.WriteResponse(w, errResponse)
+		return utils.WriteJsonResponse(w, errResponse)
 	}
 
 	if err := validator.Validate(input); err != nil {
@@ -34,9 +42,9 @@ func (h *Handler) Filter(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	results, err := h.Service.FilterRecords(input.StartDate, input.EndDate, input.MinCount, input.MaxCount)
-	if err != nil {
+	if err == nil {
 		errResponse := recordResponses.CreateFilterResponse(responses.Success, responses.Success.Message(), results)
-		return utils.WriteResponse(w, errResponse)
+		return utils.WriteJsonResponse(w, errResponse)
 	}
 	return nil
 }

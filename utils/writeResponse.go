@@ -5,24 +5,23 @@ import (
 	"getir_case/api/responses"
 	"getir_case/pkg/errors"
 	"io"
+	"net/http"
 )
 
-func WriteResponse(writer io.Writer, response any) error {
-	err := json.NewEncoder(writer).Encode(response)
-	if err != nil {
-		return err
-	}
-	return nil
+func SetJsonHeader(w http.ResponseWriter) {
+	w.Header().Set("Content-Type", "application/json")
 }
 
-func SetHeaderForJson(writer io.Writer) {
+func WriteJsonResponse(writer io.Writer, response any) error {
+	return json.NewEncoder(writer).Encode(response)
+}
+
+func WriteErrorResponse(writer io.Writer, errorMessage string) error {
+	standardError := responses.ErrorResponse{Error: errorMessage}
+	return WriteJsonResponse(writer, standardError)
 }
 
 func WriteValidationError(writer io.Writer, message string) error {
 	validationError := errors.ValidationError{Code: responses.ValidationError, Message: message}
-	err := json.NewEncoder(writer).Encode(validationError)
-	if err != nil {
-		return err
-	}
-	return nil
+	return json.NewEncoder(writer).Encode(validationError)
 }

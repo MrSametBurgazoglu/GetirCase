@@ -19,7 +19,7 @@ func getPort() string {
 
 func setupRouter() {
 
-	db := database.SetupDatabase()
+	db := database.SetupMongoDatabase()
 
 	apiServices := services.SetupServices(db)
 
