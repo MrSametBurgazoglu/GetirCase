@@ -46,7 +46,7 @@ func SetupServer(handler http.Handler) error {
 
 	fs := http.FileServer(http.Dir("./docs/swagger-ui/"))
 	http.Handle("/swagger/", http.StripPrefix("/swagger", fs))
-	homepage := `<html>Welcome to my website!\nfor swagger please move to <a href="https://getir-case-3p88.onrender.com/swagger/"></a></html>`
+	homepage := `<html>Welcome to my website!<br>for swagger please move to <a href="https://getir-case-3p88.onrender.com/swagger/">Swagger</a></html>`
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, homepage)
