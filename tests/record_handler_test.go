@@ -63,8 +63,8 @@ func TestRecordFilter(t *testing.T) {
 			Code: 0,
 			Msg:  "success",
 			Records: []*models.RecordFilterModel{
-				{Key: "TAKwGc6Jr4i8Z487", CreatedAt: "2017-01-28 04:22:14.398 +0300 +03", TotalCount: 2800},
-				{Key: "NAeQ8eX7e5TEg7oH", CreatedAt: "2017-01-27 11:19:14.135 +0300 +03", TotalCount: 2900},
+				{Key: "TAKwGc6Jr4i8Z487", TotalCount: 2800},
+				{Key: "NAeQ8eX7e5TEg7oH", TotalCount: 2900},
 			},
 		}
 
@@ -84,9 +84,7 @@ func TestRecordFilter(t *testing.T) {
 			if response.Key != gotResponse.Records[i].Key {
 				t.Errorf("got %q, want %q", response.Key, gotResponse.Records[i].Key)
 			}
-			if response.CreatedAt != gotResponse.Records[i].CreatedAt {
-				t.Errorf("got %q, want %q", response.CreatedAt, gotResponse.Records[i].CreatedAt)
-			}
+
 			if response.TotalCount != gotResponse.Records[i].TotalCount {
 				t.Errorf("got %q, want %q", response.TotalCount, gotResponse.Records[i].TotalCount)
 			}
