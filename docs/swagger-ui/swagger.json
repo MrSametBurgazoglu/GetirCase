@@ -135,7 +135,7 @@
                 },
                 "value": {
                     "type": "string",
-                    "example": "sametR"
+                    "example": "samet"
                 }
             }
         },
