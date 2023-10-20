@@ -12,13 +12,13 @@ var (
 	DBName                string
 	RecordCollectionName  string
 	RedisConnectionAddr   string
+	RedisConnectionUrl    string
 	RedisPassword         string
 	RedisDatabaseNumber   int
 	Port                  string
 )
 
 func InitConfig() {
-	RedisConnectionAddr = os.Getenv("REDIS_CONNECTION_ADDRESS")
 	err := godotenv.Load("local.env")
 	if err != nil {
 		if !os.IsNotExist(err) {
@@ -32,9 +32,8 @@ func InitConfig() {
 	MongoConnectionString = os.Getenv("MONGO_CONNECTION_STRING")
 	DBName = os.Getenv("DB_NAME")
 	RecordCollectionName = os.Getenv("RECORD_COLLECTION_NAME")
-	if RedisConnectionAddr == "" {
-		RedisConnectionAddr = os.Getenv("REDIS_CONNECTION_ADDRESS")
-	}
+	RedisConnectionAddr = os.Getenv("REDIS_CONNECTION_ADDRESS")
+	RedisConnectionUrl = os.Getenv("REDIS_CONNECTION_URL")
 	RedisPassword = os.Getenv("REDIS_PASSWORD")
 	RedisDatabaseNumber, err = strconv.Atoi(os.Getenv("REDIS_DATABASE_NO"))
 	if err != nil {

@@ -15,11 +15,19 @@ type RedisDatabase struct {
 func SetupRedisDatabase() *RedisDatabase {
 	database := new(RedisDatabase)
 	ctx := context.TODO()
-	rdb := redis.NewClient(&redis.Options{
-		Addr:     config.RedisConnectionAddr,
-		Password: config.RedisPassword,
-		DB:       config.RedisDatabaseNumber,
-	})
+	var opt *redis.Options
+	var err error
+	if config.RedisConnectionUrl != "" {
+		opt, err = redis.ParseURL(config.RedisConnectionUrl)
+	} else {
+		opt = &redis.Options{
+			Addr:     config.RedisConnectionAddr,
+			Password: config.RedisPassword,
+			DB:       config.RedisDatabaseNumber,
+		}
+	}
+
+	rdb := redis.NewClient(opt)
 	database.Client = rdb
 	pong, err := rdb.Ping(ctx).Result()
 	if err != nil {
