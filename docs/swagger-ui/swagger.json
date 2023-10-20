@@ -94,7 +94,7 @@
                 "summary": "Set Value",
                 "parameters": [
                     {
-                        "description": "Date and Total Count Range",
+                        "description": "Set value by key in memory database",
                         "name": "body",
                         "in": "body",
                         "required": true,
@@ -128,6 +128,10 @@
         },
         "MemoryRequests.KeyValue": {
             "type": "object",
+            "required": [
+                "key",
+                "value"
+            ],
             "properties": {
                 "key": {
                     "type": "string",
@@ -187,7 +191,7 @@
             "type": "object",
             "properties": {
                 "createdAt": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "key": {
                     "type": "string"

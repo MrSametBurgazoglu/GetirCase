@@ -58,7 +58,7 @@ func (h *Handler) GetValueByKey(w http.ResponseWriter, r *http.Request) error {
 //	@Tags			in_memory
 //	@Accept			json
 //	@Produce		json
-//	@Param			body	body	MemoryRequests.KeyValue	true	"Date and Total Count Range"
+//	@Param			body	body	MemoryRequests.KeyValue	true	"Set value by key in memory database"
 //	@Success 200 {object} MemoryMapResponses.KeyValue
 //	@Router			/api/set_in_memory [post]
 func (h *Handler) SetValueByKey(w http.ResponseWriter, r *http.Request) error {
