@@ -45,7 +45,7 @@ func SetupServer(handler http.Handler) error {
 	fs := http.FileServer(http.Dir("./docs/swagger-ui/"))
 	http.Handle("/swagger/", http.StripPrefix("/swagger", fs))
 
-	return http.ListenAndServe(":"+port, handler)
+	return http.ListenAndServe("0.0.0.0:"+port, handler)
 
 }
 
