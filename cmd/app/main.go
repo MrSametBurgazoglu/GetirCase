@@ -9,6 +9,7 @@ package main
 import (
 	"getir_case/api/handler"
 	_ "getir_case/api/requests/RecordRequests"
+	"getir_case/config"
 	"getir_case/drivers/database"
 	"getir_case/pkg/services"
 	"log"
@@ -47,6 +48,9 @@ func SetupServer(handler http.Handler) error {
 }
 
 func main() {
+
+	config.InitConfig()
+
 	err := SetupServer(nil)
 	if err != nil {
 		log.Fatalln(err)

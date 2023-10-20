@@ -17,7 +17,7 @@ var (
 	RedisDatabaseNumber   int
 )
 
-func init() {
+func InitConfig() {
 	err := godotenv.Load("local.env")
 	if err != nil {
 		if !os.IsNotExist(err) {

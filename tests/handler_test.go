@@ -1,22 +1,44 @@
-package Record
+package tests
 
 import (
+	"bytes"
 	"encoding/json"
 	mainHandler "getir_case/api/handler"
+	RecordHandler "getir_case/api/handler/Record"
+	"getir_case/api/requests/RecordRequests"
 	recordResponses "getir_case/api/responses/Record"
+	"getir_case/config"
 	"getir_case/drivers/database"
 	"getir_case/pkg/models"
 	"getir_case/pkg/repository/Record"
 	RecordService "getir_case/pkg/services/Record"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 )
 
-func TestMemory(t *testing.T) {
+func TestRecordFilter(t *testing.T) {
 	t.Run("returns Pepper's score", func(t *testing.T) {
-		getRequest, _ := http.NewRequest(http.MethodGet, "/api/filter_records", nil)
+
+		requestBody := RecordRequests.FilterInput{
+			StartDate: "2016-01-26",
+			EndDate:   "2018-02-02",
+			MinCount:  2700,
+			MaxCount:  3000,
+		}
+
+		requestBodyJson, err := json.Marshal(requestBody)
+
+		if err != nil {
+			log.Fatalln(err.Error())
+		}
+
+		getRequest, _ := http.NewRequest(http.MethodPost, "/api/filter_records", bytes.NewBuffer(requestBodyJson))
+		getRequest.Header.Set("Content-Type", "application/json; charset=UTF-8")
 		getResponse := httptest.NewRecorder()
+
+		config.InitConfig()
 
 		db := database.SetupDatabase()
 
@@ -24,7 +46,7 @@ func TestMemory(t *testing.T) {
 
 		service := &RecordService.Service{Repository: repository}
 
-		recordHandler := NewRecordHandler(service)
+		recordHandler := RecordHandler.NewRecordHandler(service)
 
 		endpointHandler := mainHandler.Handler(recordHandler.Filter)
 
@@ -32,7 +54,7 @@ func TestMemory(t *testing.T) {
 
 		gotResponse := recordResponses.FilterResponse{}
 
-		err := json.Unmarshal(getResponse.Body.Bytes(), &gotResponse)
+		err = json.Unmarshal(getResponse.Body.Bytes(), &gotResponse)
 		if err != nil {
 			t.Errorf("error on response")
 		}
@@ -59,8 +81,14 @@ func TestMemory(t *testing.T) {
 		}
 
 		for i, response := range wantedResponse.Records {
-			if response.Key != gotResponse.Records[i].Key || response.CreatedAt != gotResponse.Records[i].CreatedAt || response.TotalCount != gotResponse.Records[i].TotalCount {
-				t.Errorf("got %q, want %q", response, wantedResponse)
+			if response.Key != gotResponse.Records[i].Key {
+				t.Errorf("got %q, want %q", response.Key, gotResponse.Records[i].Key)
+			}
+			if response.CreatedAt != gotResponse.Records[i].CreatedAt {
+				t.Errorf("got %q, want %q", response.CreatedAt, gotResponse.Records[i].CreatedAt)
+			}
+			if response.TotalCount != gotResponse.Records[i].TotalCount {
+				t.Errorf("got %q, want %q", response.TotalCount, gotResponse.Records[i].TotalCount)
 			}
 		}
 	})

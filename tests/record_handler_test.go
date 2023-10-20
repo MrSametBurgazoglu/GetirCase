@@ -1,9 +1,11 @@
-package MemoryMap
+package tests
 
 import (
 	"encoding/json"
 	mainHandler "getir_case/api/handler"
+	MemoryMap2 "getir_case/api/handler/MemoryMap"
 	"getir_case/api/responses/MemoryMap"
+	"getir_case/config"
 	"getir_case/drivers/database"
 	memoryRepository "getir_case/pkg/repository/MemoryMap"
 	memoryServices "getir_case/pkg/services/MemoryMap"
@@ -19,13 +21,15 @@ func TestMemory(t *testing.T) {
 		setResponse := httptest.NewRecorder()
 		getResponse := httptest.NewRecorder()
 
+		config.InitConfig()
+
 		db := database.SetupDatabase()
 
 		repository := &memoryRepository.Repository{DB: db}
 
 		service := &memoryServices.Service{Repository: repository}
 
-		memoryMapHandler := NewMemoryMapHandler(service)
+		memoryMapHandler := MemoryMap2.NewMemoryMapHandler(service)
 
 		endpointHandler := mainHandler.Handler(memoryMapHandler.GetValueByKey)
 
