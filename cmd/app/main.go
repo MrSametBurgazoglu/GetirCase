@@ -16,6 +16,7 @@ import (
 	"getir_case/config"
 	"getir_case/drivers/database"
 	"getir_case/pkg/services"
+	"io"
 	"log"
 	"net/http"
 )
@@ -45,6 +46,11 @@ func SetupServer(handler http.Handler) error {
 
 	fs := http.FileServer(http.Dir("./docs/swagger-ui/"))
 	http.Handle("/swagger/", http.StripPrefix("/swagger", fs))
+	homepage := `<html>Welcome to my website!\nfor swagger please move to <a href="https://getir-case-3p88.onrender.com/swagger/"></a></html>`
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		io.WriteString(w, homepage)
+	})
 
 	return http.ListenAndServe("0.0.0.0:"+port, handler)
 
