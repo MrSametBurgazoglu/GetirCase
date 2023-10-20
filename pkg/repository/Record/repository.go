@@ -16,7 +16,7 @@ type Repository struct {
 }
 
 func (r *Repository) FilterRecordsByDateRangeAndCountRange(ctx context.Context, startDate, endDate time.Time, minCount, maxCount int) ([]*models.RecordFilterModel, error) {
-	matchStage1 := bson.D{
+	matchStage1 := bson.D{ //first match for range date time
 		{"$match", bson.D{
 			{"createdAt", bson.D{
 				{"$lte", primitive.NewDateTimeFromTime(endDate)}, {"$gte", primitive.NewDateTimeFromTime(startDate)}},
@@ -25,7 +25,7 @@ func (r *Repository) FilterRecordsByDateRangeAndCountRange(ctx context.Context, 
 		},
 	}
 
-	projectStage := bson.D{
+	projectStage := bson.D{ //sum counts as totalCount
 		{Key: "$project", Value: bson.D{
 			{"totalCount", bson.D{{"$sum", "$counts"}}},
 			{"_id", 1},
@@ -35,7 +35,7 @@ func (r *Repository) FilterRecordsByDateRangeAndCountRange(ctx context.Context, 
 		},
 	}
 
-	matchStage2 := bson.D{
+	matchStage2 := bson.D{ //second match stage for total count
 		{Key: "$match", Value: bson.D{
 			{"totalCount", bson.D{{"$lte", maxCount}, {"$gte", minCount}}},
 		},
@@ -49,17 +49,9 @@ func (r *Repository) FilterRecordsByDateRangeAndCountRange(ctx context.Context, 
 		log.Println(err.Error())
 		return nil, err
 	}
-	var results []bson.M
+	var results []*models.RecordFilterModel
 	if err = aggregate.All(context.TODO(), &results); err != nil {
 		log.Fatal(err)
 	}
-	var resultModels []*models.RecordFilterModel
-	for _, result := range results {
-		model := new(models.RecordFilterModel)
-		model.Key = result["key"].(string)
-		model.CreatedAt = result["createdAt"].(primitive.DateTime).Time().String()
-		model.TotalCount = int(result["totalCount"].(int64))
-		resultModels = append(resultModels, model)
-	}
-	return resultModels, nil
+	return results, nil
 }

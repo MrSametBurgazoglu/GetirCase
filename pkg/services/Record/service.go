@@ -2,6 +2,7 @@ package Record
 
 import (
 	"context"
+	"errors"
 	"getir_case/pkg/models"
 	"getir_case/pkg/repository/Record"
 	"time"
@@ -24,12 +25,12 @@ func (s *Service) FilterRecords(startDate, endDate string, minCount, maxCount in
 
 	startDateTime, err := time.Parse(sourceLayout, startDate)
 	if err != nil {
-		return nil, err
+		return nil, errors.New("cannot parse startDate please use 2006-01-02 format")
 	}
 
 	endDateTime, err := time.Parse(sourceLayout, endDate)
 	if err != nil {
-		return nil, err
+		return nil, errors.New("cannot parse endDate please use 2006-01-02 format")
 	}
 
 	return s.Repository.FilterRecordsByDateRangeAndCountRange(ctx, startDateTime, endDateTime, minCount, maxCount)

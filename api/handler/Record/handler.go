@@ -7,7 +7,6 @@ import (
 	"getir_case/api/validator"
 	"getir_case/pkg/services/Record"
 	"getir_case/utils"
-	"log"
 	"net/http"
 )
 
@@ -46,10 +45,7 @@ func (h *Handler) Filter(w http.ResponseWriter, r *http.Request) error {
 
 	if err := validator.Validate(input); err != nil {
 		validationError := validator.GetValidationErrors(err)
-		responseError := utils.WriteValidationError(w, validationError)
-		if responseError != nil {
-			return responseError
-		}
+		return utils.WriteValidationError(w, validationError)
 	}
 
 	results, err := h.Service.FilterRecords(input.StartDate, input.EndDate, input.MinCount, input.MaxCount)
@@ -57,7 +53,7 @@ func (h *Handler) Filter(w http.ResponseWriter, r *http.Request) error {
 		response := recordResponses.CreateFilterResponse(responses.Success, responses.Success.Message(), results)
 		return utils.WriteJsonResponse(w, response)
 	} else {
-		log.Println(err.Error())
+		return utils.WriteErrorResponse(w, err.Error())
 	}
 
 	return nil

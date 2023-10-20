@@ -4,6 +4,7 @@ import (
 	"errors"
 	memoryRequests "getir_case/api/requests/MemoryRequests"
 	memoryMapResponses "getir_case/api/responses/MemoryMapResponses"
+	"getir_case/api/validator"
 	"getir_case/pkg/services/MemoryMap"
 	"getir_case/utils"
 	"net/http"
@@ -72,6 +73,11 @@ func (h *Handler) SetValueByKey(w http.ResponseWriter, r *http.Request) error {
 
 	if err := utils.ParseJsonBody(r.Body, &input); err != nil {
 		return utils.WriteErrorResponse(w, err.Message)
+	}
+
+	if err := validator.Validate(input); err != nil {
+		validationError := validator.GetValidationErrors(err)
+		return utils.WriteValidationError(w, validationError)
 	}
 
 	err := h.Service.SetValueByKey(input.Key, input.Value)
