@@ -15,6 +15,7 @@ var (
 	RedisConnectionAddr   string
 	RedisPassword         string
 	RedisDatabaseNumber   int
+	Port                  string
 )
 
 func InitConfig() {
@@ -27,6 +28,7 @@ func InitConfig() {
 		}
 	}
 
+	Port = os.Getenv("Port")
 	MongoConnectionString = os.Getenv("MONGO_CONNECTION_STRING")
 	DBName = os.Getenv("DB_NAME")
 	MongoUserName = os.Getenv("DB_USERNAME")

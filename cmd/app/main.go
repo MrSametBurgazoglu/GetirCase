@@ -17,11 +17,10 @@ import (
 	"getir_case/pkg/services"
 	"log"
 	"net/http"
-	"os"
 )
 
 func getPort() string {
-	port := os.Getenv("PORT")
+	port := config.Port
 	if port == "" {
 		port = "8080"
 	}
