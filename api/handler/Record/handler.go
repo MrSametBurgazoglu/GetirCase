@@ -34,20 +34,14 @@ func (h *Handler) Filter(w http.ResponseWriter, r *http.Request) error {
 
 	utils.SetJsonHeader(w)
 
-	print("wow1")
-
 	if !utils.CheckMethod(allowedMethods, r) {
 		return utils.WriteErrorResponse(w, "404 NOT FOUND")
 	}
-
-	print("wow2")
 
 	if err := utils.ParseJsonBody(r.Body, &input); err != nil {
 		errResponse := recordResponses.CreateFilterResponse(err.Code, err.Message, nil)
 		return utils.WriteJsonResponse(w, errResponse)
 	}
-
-	print("wow3")
 
 	if err := validator.Validate(input); err != nil {
 		validationError := validator.GetValidationErrors(err)
@@ -58,7 +52,6 @@ func (h *Handler) Filter(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	results, err := h.Service.FilterRecords(input.StartDate, input.EndDate, input.MinCount, input.MaxCount)
-	print(results)
 	if err == nil {
 		response := recordResponses.CreateFilterResponse(responses.Success, responses.Success.Message(), results)
 		return utils.WriteJsonResponse(w, response)

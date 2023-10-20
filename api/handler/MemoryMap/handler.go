@@ -2,6 +2,7 @@ package MemoryMap
 
 import (
 	"errors"
+	memoryRequests "getir_case/api/requests/MemoryRequests"
 	memoryMapResponses "getir_case/api/responses/MemoryMap"
 	"getir_case/pkg/services/MemoryMap"
 	"getir_case/utils"
@@ -59,23 +60,24 @@ func (h *Handler) GetValueByKey(w http.ResponseWriter, r *http.Request) error {
 //	@Param value query string true "key"
 //	@Router			/api/set_in_memory [post]
 func (h *Handler) SetValueByKey(w http.ResponseWriter, r *http.Request) error {
+	var input memoryRequests.KeyValue
+	allowedMethods := []string{"POST"}
+
 	utils.SetJsonHeader(w)
 
-	key, err := h.GetKey(r)
-	if err != nil {
-		return err
+	if !utils.CheckMethod(allowedMethods, r) {
+		return utils.WriteErrorResponse(w, "404 NOT FOUND")
 	}
 
-	value, err := h.GetValue(r)
-	if err != nil {
-		return err
+	if err := utils.ParseJsonBody(r.Body, &input); err != nil {
+		return utils.WriteErrorResponse(w, err.Message)
 	}
 
-	err = h.Service.SetValueByKey(key, value)
+	err := h.Service.SetValueByKey(input.Key, input.Value)
 	if err != nil {
 		return utils.WriteErrorResponse(w, err.Error())
 	} else {
-		Response := memoryMapResponses.CreateKeyValueResponse(key, value)
+		Response := memoryMapResponses.CreateKeyValueResponse(input.Key, input.Value)
 		return utils.WriteJsonResponse(w, Response)
 	}
 }
