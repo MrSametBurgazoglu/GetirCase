@@ -1,4 +1,8 @@
 {
+    "schemes": [
+        "http",
+        "https"
+    ],
     "swagger": "2.0",
     "info": {
         "description": "Getir Case Api",
@@ -6,7 +10,7 @@
         "contact": {},
         "version": "0.0.1"
     },
-    "host": "localhost:8080",
+    "host": "getir-case-3p88.onrender.com",
     "basePath": "/",
     "paths": {
         "/api/filter_records": {

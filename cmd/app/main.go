@@ -3,7 +3,8 @@ package main
 //	@title			GETIR CASE API
 //	@version		0.0.1
 //	@description	Getir Case Api
-//	@host		localhost:8080
+//	@host		getir-case-3p88.onrender.com
+//	@schemes	http https
 //	@BasePath	/
 
 import (
