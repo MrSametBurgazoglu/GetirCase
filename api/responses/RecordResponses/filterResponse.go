@@ -1,4 +1,4 @@
-package Record
+package RecordResponses
 
 import (
 	"getir_case/api/responses"

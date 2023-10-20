@@ -6,7 +6,7 @@ import (
 	mainHandler "getir_case/api/handler"
 	RecordHandler "getir_case/api/handler/Record"
 	"getir_case/api/requests/RecordRequests"
-	recordResponses "getir_case/api/responses/Record"
+	recordResponses "getir_case/api/responses/RecordResponses"
 	"getir_case/config"
 	"getir_case/drivers/database"
 	"getir_case/pkg/models"

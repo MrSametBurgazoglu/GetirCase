@@ -8,7 +8,10 @@ package main
 
 import (
 	"getir_case/api/handler"
+	_ "getir_case/api/requests/MemoryRequests"
 	_ "getir_case/api/requests/RecordRequests"
+	_ "getir_case/api/responses/MemoryMapResponses"
+	_ "getir_case/api/responses/RecordResponses"
 	"getir_case/config"
 	"getir_case/drivers/database"
 	"getir_case/pkg/services"

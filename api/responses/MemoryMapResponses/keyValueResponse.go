@@ -1,4 +1,4 @@
-package MemoryMap
+package MemoryMapResponses
 
 type KeyValue struct {
 	Key   string `json:"key"`

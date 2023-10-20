@@ -3,7 +3,7 @@ package Record
 import (
 	"getir_case/api/requests/RecordRequests"
 	"getir_case/api/responses"
-	recordResponses "getir_case/api/responses/Record"
+	recordResponses "getir_case/api/responses/RecordResponses"
 	"getir_case/api/validator"
 	"getir_case/pkg/services/Record"
 	"getir_case/utils"
@@ -27,6 +27,7 @@ func NewRecordHandler(recordService *Record.Service) *Handler {
 //	@Accept			json
 //	@Produce		json
 //	@Param			body	body	RecordRequests.FilterInput	true	"Date and Total Count Range"
+//	@Success 200 {object} RecordResponses.FilterResponse
 //	@Router			/api/filter_records [post]
 func (h *Handler) Filter(w http.ResponseWriter, r *http.Request) error {
 	var input RecordRequests.FilterInput

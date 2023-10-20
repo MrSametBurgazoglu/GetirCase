@@ -33,7 +33,14 @@
                         }
                     }
                 ],
-                "responses": {}
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/RecordResponses.FilterResponse"
+                        }
+                    }
+                }
             }
         },
         "/api/get_in_memory": {
@@ -58,7 +65,14 @@
                         "required": true
                     }
                 ],
-                "responses": {}
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/MemoryMapResponses.KeyValue"
+                        }
+                    }
+                }
             }
         },
         "/api/set_in_memory": {
@@ -76,25 +90,51 @@
                 "summary": "Set Value",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "key",
-                        "name": "key",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "key",
-                        "name": "value",
-                        "in": "query",
-                        "required": true
+                        "description": "Date and Total Count Range",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/MemoryRequests.KeyValue"
+                        }
                     }
                 ],
-                "responses": {}
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/MemoryMapResponses.KeyValue"
+                        }
+                    }
+                }
             }
         }
     },
     "definitions": {
+        "MemoryMapResponses.KeyValue": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "MemoryRequests.KeyValue": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "example": "ben"
+                },
+                "value": {
+                    "type": "string",
+                    "example": "sametR"
+                }
+            }
+        },
         "RecordRequests.FilterInput": {
             "type": "object",
             "required": [
@@ -121,6 +161,50 @@
                     "example": "2016-01-26"
                 }
             }
+        },
+        "RecordResponses.FilterResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "$ref": "#/definitions/responses.ResponseTypes"
+                },
+                "msg": {
+                    "type": "string"
+                },
+                "records": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.RecordFilterModel"
+                    }
+                }
+            }
+        },
+        "models.RecordFilterModel": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "totalCount": {
+                    "type": "integer"
+                }
+            }
+        },
+        "responses.ResponseTypes": {
+            "type": "integer",
+            "enum": [
+                0,
+                1,
+                2
+            ],
+            "x-enum-varnames": [
+                "Success",
+                "ParseJsonError",
+                "ValidationError"
+            ]
         }
     }
 }

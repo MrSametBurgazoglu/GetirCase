@@ -1,6 +1,6 @@
-package MemoryMap
+package MemoryRequests
 
 type KeyValue struct {
-	Key   string `json:"key"`
-	Value string `json:"value"`
+	Key   string `json:"key" example:"ben"`
+	Value string `json:"value" example:"sametR"`
 }

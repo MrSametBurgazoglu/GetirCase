@@ -3,7 +3,7 @@ package MemoryMap
 import (
 	"errors"
 	memoryRequests "getir_case/api/requests/MemoryRequests"
-	memoryMapResponses "getir_case/api/responses/MemoryMap"
+	memoryMapResponses "getir_case/api/responses/MemoryMapResponses"
 	"getir_case/pkg/services/MemoryMap"
 	"getir_case/utils"
 	"net/http"
@@ -25,6 +25,7 @@ func NewMemoryMapHandler(memoryMapService *MemoryMap.Service) *Handler {
 //	@Accept			json
 //	@Produce		json
 //	@Param key query string true "key"
+//	@Success 200 {object} MemoryMapResponses.KeyValue
 //	@Router			/api/get_in_memory [get]
 func (h *Handler) GetValueByKey(w http.ResponseWriter, r *http.Request) error {
 	allowedMethods := []string{"GET"}
@@ -56,8 +57,8 @@ func (h *Handler) GetValueByKey(w http.ResponseWriter, r *http.Request) error {
 //	@Tags			in_memory
 //	@Accept			json
 //	@Produce		json
-//	@Param key query string true "key"
-//	@Param value query string true "key"
+//	@Param			body	body	MemoryRequests.KeyValue	true	"Date and Total Count Range"
+//	@Success 200 {object} MemoryMapResponses.KeyValue
 //	@Router			/api/set_in_memory [post]
 func (h *Handler) SetValueByKey(w http.ResponseWriter, r *http.Request) error {
 	var input memoryRequests.KeyValue
