@@ -46,7 +46,7 @@ func SetupServer(handler http.Handler) *http.Server {
 	port := getPort()
 
 	server := http.Server{
-		Addr:    "127.0.0.1:" + port,
+		Addr:    "0.0.0.0:" + port,
 		Handler: handler,
 	}
 
@@ -72,8 +72,6 @@ func main() {
 	defer stop()
 
 	server := SetupServer(nil)
-
-	println("listening", server.Addr)
 
 	if err := server.ListenAndServe(); err != nil {
 		log.Fatalln(err)
