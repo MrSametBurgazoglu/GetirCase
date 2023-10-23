@@ -12,6 +12,8 @@ type Services struct {
 	MemoryMapService *MemoryMap.Service
 }
 
+// SetupServices
+// setup all services with necessary repositories
 func SetupServices(db *database.Database) *Services {
 	repositories := repository.NewRepositories(db)
 	recordService := &Record.Service{Repository: repositories.Record}

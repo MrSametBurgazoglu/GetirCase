@@ -53,7 +53,7 @@ func SetupServer(handler http.Handler) *http.Server {
 	setupRouter()
 
 	fs := http.FileServer(http.Dir("./docs/swagger-ui/"))
-	http.Handle("/swagger/", http.StripPrefix("/swagger", fs))
+	http.Handle("/swagger/", http.StripPrefix("/swagger", fs)) //handling swagger ui
 	homepage := `<html>Welcome to my website!<br>for swagger please move to <a href="https://getir-case-3p88.onrender.com/swagger/">Swagger</a></html>`
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -79,7 +79,7 @@ func main() {
 
 	<-ctx.Done()
 
-	if err := server.Shutdown(context.TODO()); err != nil {
+	if err := server.Shutdown(context.TODO()); err != nil { //graceful shutdown
 		log.Printf("server shutdown returned an err: %v\n", err)
 	}
 

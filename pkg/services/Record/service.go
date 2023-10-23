@@ -23,12 +23,12 @@ func (s *Service) FilterRecords(startDate, endDate string, minCount, maxCount in
 
 	sourceLayout := "2006-01-02"
 
-	startDateTime, err := time.Parse(sourceLayout, startDate)
+	startDateTime, err := time.Parse(sourceLayout, startDate) // convert to go time
 	if err != nil {
 		return nil, errors.New("cannot parse startDate please use 2006-01-02 format")
 	}
 
-	endDateTime, err := time.Parse(sourceLayout, endDate)
+	endDateTime, err := time.Parse(sourceLayout, endDate) // convert to go time
 	if err != nil {
 		return nil, errors.New("cannot parse endDate please use 2006-01-02 format")
 	}
