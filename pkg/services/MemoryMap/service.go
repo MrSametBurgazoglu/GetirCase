@@ -1,13 +1,13 @@
 package MemoryMap
 
 import (
-	"context"
+	"errors"
 	"getir_case/pkg/repository/MemoryMap"
 )
 
 type ServiceInterface interface {
 	GetValueByKey(key string) (string, error)
-	SetValueByKey(key, value string) error
+	SetValueByKey(key, value string)
 }
 
 type Service struct {
@@ -15,14 +15,18 @@ type Service struct {
 }
 
 func (s *Service) GetValueByKey(key string) (string, error) {
-	ctx := context.TODO()
-
-	return s.Repository.GetValueByKey(ctx, key)
+	val, err := s.Repository.GetValueByKey(key)
+	if err != nil {
+		return "", err
+	}
+	value, ok := val.(string)
+	if !ok {
+		return "", errors.New("value cannot convert to string")
+	}
+	return value, nil
 
 }
 
-func (s *Service) SetValueByKey(key, value string) error {
-	ctx := context.TODO()
-
-	return s.Repository.SetValueByKey(ctx, key, value)
+func (s *Service) SetValueByKey(key, value string) {
+	s.Repository.SetValueByKey(key, value)
 }

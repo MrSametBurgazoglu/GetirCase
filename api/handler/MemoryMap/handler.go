@@ -80,13 +80,11 @@ func (h *Handler) SetValueByKey(w http.ResponseWriter, r *http.Request) error {
 		return utils.WriteValidationError(w, validationError)
 	}
 
-	err := h.Service.SetValueByKey(input.Key, input.Value)
-	if err != nil {
-		return utils.WriteErrorResponse(w, err.Error())
-	} else {
-		Response := memoryMapResponses.CreateKeyValueResponse(input.Key, input.Value)
-		return utils.WriteJsonResponse(w, Response)
-	}
+	h.Service.SetValueByKey(input.Key, input.Value)
+
+	response := memoryMapResponses.CreateKeyValueResponse(input.Key, input.Value)
+	return utils.WriteJsonResponse(w, response)
+
 }
 
 func (h *Handler) GetKey(r *http.Request) (string, error) {

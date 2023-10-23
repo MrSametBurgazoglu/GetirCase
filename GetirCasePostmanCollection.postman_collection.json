@@ -1,0 +1,260 @@
+{
+	"info": {
+		"_postman_id": "02b42928-1c13-44d6-8157-0f9ec1c6b0f1",
+		"name": "GetirCasePostmanCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28791281"
+	},
+	"item": [
+		{
+			"name": "Filter Records",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n    \"startDate\": \"2016-01-26\",\r\n    \"endDate\": \"2018-02-02\",\r\n    \"minCount\": 2700,\r\n    \"maxCount\": 3000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/filter_records",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"filter_records"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Filter Records",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"startDate\": \"2016-01-26\",\r\n    \"endDate\": \"2018-02-02\",\r\n    \"minCount\": 2700,\r\n    \"maxCount\": 3000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/filter_records",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"filter_records"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 0,\n    \"msg\": \"Success\",\n    \"records\": [\n        {\n            \"key\": \"TAKwGc6Jr4i8Z487\",\n            \"createdAt\": \"2017-01-28T01:22:14.398Z\",\n            \"totalCount\": 2800\n        },\n        {\n            \"key\": \"NAeQ8eX7e5TEg7oH\",\n            \"createdAt\": \"2017-01-27T08:19:14.135Z\",\n            \"totalCount\": 2900\n        }\n    ]\n}"
+				},
+				{
+					"name": "Filter Records",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"startDate\": \"2016-01-26\",\r\n    \"endDate\": \"2018-02-02\",\r\n    \"maxCount\": 3000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/filter_records",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"filter_records"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"error\": \"error on minCount:required\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Get By Key",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/get_in_memory?key=key",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"get_in_memory"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "key"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get By Key",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/get_in_memory?key=key",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"get_in_memory"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "key"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n\"key\": \"key\",\r\n\"value\": \"getir\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Set By Key",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"key\": \"key\",\r\n\"value\": \"getir\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/set_in_memory",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"set_in_memory"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Set By Key",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"key\": \"key\",\r\n\"value\": \"getir\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/set_in_memory",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"set_in_memory"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n\"key\": \"key\",\r\n\"value\": \"getir\"\r\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://getir-case-3p88.onrender.com"
+		}
+	]
+}

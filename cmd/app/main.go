@@ -8,6 +8,7 @@ package main
 //	@BasePath	/
 
 import (
+	"context"
 	"getir_case/api/handler"
 	_ "getir_case/api/requests/MemoryRequests"
 	_ "getir_case/api/requests/RecordRequests"
@@ -19,6 +20,8 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os/signal"
+	"syscall"
 )
 
 func getPort() string {
@@ -39,8 +42,13 @@ func setupRouter() {
 
 }
 
-func SetupServer(handler http.Handler) error {
+func SetupServer(handler http.Handler) *http.Server {
 	port := getPort()
+
+	server := http.Server{
+		Addr:    "127.0.0.1:" + port,
+		Handler: handler,
+	}
 
 	setupRouter()
 
@@ -52,7 +60,7 @@ func SetupServer(handler http.Handler) error {
 		io.WriteString(w, homepage)
 	})
 
-	return http.ListenAndServe("0.0.0.0:"+port, handler)
+	return &server
 
 }
 
@@ -60,8 +68,21 @@ func main() {
 
 	config.InitConfig()
 
-	err := SetupServer(nil)
-	if err != nil {
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	defer stop()
+
+	server := SetupServer(nil)
+
+	println("listening", server.Addr)
+
+	if err := server.ListenAndServe(); err != nil {
 		log.Fatalln(err)
 	}
+
+	<-ctx.Done()
+
+	if err := server.Shutdown(context.TODO()); err != nil {
+		log.Printf("server shutdown returned an err: %v\n", err)
+	}
+
 }
