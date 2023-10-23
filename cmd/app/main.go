@@ -22,6 +22,7 @@ import (
 	"net/http"
 	"os/signal"
 	"syscall"
+	"time"
 )
 
 func getPort() string {
@@ -77,9 +78,10 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	<-ctx.Done()
+	ctxWithTimeOut, cancel := context.WithTimeout(ctx, 10*time.Second)
+	defer cancel()
 
-	if err := server.Shutdown(context.TODO()); err != nil { //graceful shutdown
+	if err := server.Shutdown(ctxWithTimeOut); err != nil { //graceful shutdown
 		log.Printf("server shutdown returned an err: %v\n", err)
 	}
 
